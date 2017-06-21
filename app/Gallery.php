@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Gallery extends Model
 {
+		use SoftDeletes;
+		
     public function user()
 		{
 		    return $this->belongsTo('App\User');
@@ -15,4 +18,6 @@ class Gallery extends Model
     {
         return $this->hasMany('App\Photo');
     }
+
+    protected $dates = ['deleted_at'];
 }
