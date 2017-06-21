@@ -15,9 +15,4 @@ class Article extends Model
     {
         return $this->hasMany('App\Comment');
     }
-
-    public function attachments()
-    {
-        return $this->hasMany('App\Attachment');
-    }
 }
