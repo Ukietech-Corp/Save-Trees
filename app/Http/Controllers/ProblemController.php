@@ -14,12 +14,12 @@ class ProblemController extends Controller {
      *
      * @return Response
      */
-    public function index($id = null) {
-        if ($id == null) {
-            return Problem::orderBy('id', 'asc')->get();
-        } else {
-            return $this->show($id);
-        }
+    public function index(Request $request) {
+        $problems = Problem::paginate(5);
+        return response(array(
+            'error' => false,
+            'products' =>$problems->toArray(),
+        ),200);
     }
 
     /**
@@ -28,15 +28,13 @@ class ProblemController extends Controller {
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request) {
-        $problem = new Problem;
-
-        $problem->name = $request->input('name');
-        $problem->description = $request->input('description');
-        $problem->created_at = Carbon::now();
-        $problem->save();
-
-        return 'Problem record successfully created with id ' . $problem->id;
+    public function store(Request $request)
+    {
+        Problem::create($request->all());
+        return response(array(
+            'error' => false,
+            'message' =>'Problem created successfully',
+        ),200);
     }
 
     /**
@@ -45,8 +43,13 @@ class ProblemController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function show($id) {
-        return Problem::find($id);
+    public function show($id)
+    {
+        $problem = Problem::find($id);
+        return response(array(
+            'error' => false,
+            'problem' =>$problem,
+        ),200);
     }
 
     /**
@@ -57,15 +60,11 @@ class ProblemController extends Controller {
      * @return Response
      */
     public function update(Request $request, $id) {
-        $problem = Problem::find($id);
-
-        $problem->name = $request->input('name');
-        $problem->description = $request->input('email');
-        $problem->completed = $request->input('completed');
-        $problem->updated_at = Carbon::now();
-        $problem->save();
-
-        return "Sucess updating problem #" . $problem->id;
+        Problem::find($id)->update($request->all());
+        return response(array(
+            'error' => false,
+            'message' =>'Problem updated successfully',
+        ),200);
     }
 
     /**
@@ -74,11 +73,11 @@ class ProblemController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy(Request $request) {
-        $problem = Problem::find($request->input('id'));
-
-        $problem->delete();
-
-        return "Problem record successfully deleted #" . $request->input('id');
+    public function destroy($id) {
+        Problem::find($id)->delete();
+        return response(array(
+            'error' => false,
+            'message' =>'Problem deleted successfully',
+        ),200);
     }
 }
