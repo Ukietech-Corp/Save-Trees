@@ -512,6 +512,7 @@
         },
         {
             "name": "monolog/monolog",
+
             "version": "1.23.0",
             "source": {
                 "type": "git",
