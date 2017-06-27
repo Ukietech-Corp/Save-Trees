@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::group(array('prefix' => '/v1/'), function() {
     Route::resource('restful-apis','ProblemController');  
     Route::resource('acticles',  'ArticleController');

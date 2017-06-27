@@ -64,5 +64,4 @@ class Problem extends Model
     {
         return $this->hasMany('App\Event');
     }
-
 }

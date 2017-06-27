@@ -7,60 +7,52 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-	use SoftDeletes;
-	
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
+  use SoftDeletes;
 
-    /**
-     * Primary key of the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
+/**
+ * The table associated with the model.
+ *
+ * @var string
+ */
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = true;
+  protected $table = 'users';
+
+  /**
+   * Indicates if the model should be timestamped.
+   *
+   * @var bool
+   */
+  public $timestamps = true;
+
+  /**
+	 * The attributes that should be mutated to dates.
+	 *
+	 * @var array
+ 	 */
+
+	protected $dates = [
+		'created_at',
+		'updated_at',
+		'deleted_at'
+	];
+
+  /**
+	 * One to Many relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\hasMany
+	 */
     
-    /**
-     * The storage format of the model's date columns.
-     *
-     * @var string
-     */
-    protected $dateFormat = 'Y-m-d H:i:s';
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
-
-    /**
-     * The connection name for the model.
-     *
-     * @var string
-     */
-    protected $connection = 'mysql';
+    public function achievements()
+    {
+    	return $this->hasMany('App\Achievement');
+    }
 
     /**
      * One to One relation
      *
      * @return Illuminate\Database\Eloquent\Relations\hasOne
      */
-	public function gallery()
+	  public function gallery()
     {
         return $this->hasOne('App\Gallery');
     }

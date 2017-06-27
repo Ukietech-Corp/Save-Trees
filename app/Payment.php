@@ -64,5 +64,4 @@ class Payment extends Model
     {
         return $this->belongsTo('App\Event');
     }
-
 }
