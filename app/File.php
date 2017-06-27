@@ -5,16 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Payment extends Model
+class File extends Model
 {
-    use SoftDeletes;
-
+	use SoftDeletes;
+	
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'payments';
+    protected $table = 'files';
 
     /**
      * Primary key of the table.
@@ -29,7 +29,7 @@ class Payment extends Model
      * @var bool
      */
     public $timestamps = true;
-
+    
     /**
      * The storage format of the model's date columns.
      *
@@ -58,10 +58,10 @@ class Payment extends Model
     /**
      * One to Many relation
      *
-     * @return Illuminate\Database\Eloquent\Relations\hasMany
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function event()
-    {
-        return $this->belongsTo('App\Event');
-    }
+    public function user()
+	{
+	    return $this->belongsTo('App\User');
+	}
 }

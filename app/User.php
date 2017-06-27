@@ -7,41 +7,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-    use SoftDeletes;
+  use SoftDeletes;
 
-    /**
-	 * The table associated with the model.
-	 *
-	 * @var string
- 	 */
+/**
+ * The table associated with the model.
+ *
+ * @var string
+ */
 
-    protected $table = 'users';
+  protected $table = 'users';
 
-	/**
-	 * Primary key of the table.
-	 *
-	 * @var string
- 	 */
+  /**
+   * Indicates if the model should be timestamped.
+   *
+   * @var bool
+   */
+  public $timestamps = true;
 
-	protected $primaryKey = 'id';
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-
-    public $timestamps = true;
-
-    /**
-     * The storage format of the model's date columns.
-     *
-     * @var string
-     */
-
-    protected $dateFormat = 'Y-m-d H:i:s';
-
-    /**
+  /**
 	 * The attributes that should be mutated to dates.
 	 *
 	 * @var array
@@ -53,16 +36,7 @@ class User extends Model
 		'deleted_at'
 	];
 
-	/**
-     * The connection name for the model.
-     *
-     * @var string
-     */
-
-    protected $connection = 'mysql';
-
-
-    /**
+  /**
 	 * One to Many relation
 	 *
 	 * @return Illuminate\Database\Eloquent\Relations\hasMany
@@ -71,5 +45,25 @@ class User extends Model
     public function achievements()
     {
     	return $this->hasMany('App\Achievement');
+    }
+
+    /**
+     * One to One relation
+     *
+     * @return Illuminate\Database\Eloquent\Relations\hasOne
+     */
+	  public function gallery()
+    {
+        return $this->hasOne('App\Gallery');
+    }
+
+    /**
+     * One to Many relation
+     *
+     * @return Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function files()
+    {
+        return $this->hasMany('App\File');
     }
 }

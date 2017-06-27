@@ -5,16 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Payment extends Model
+class Category extends Model
 {
-    use SoftDeletes;
-
+	use SoftDeletes;
+	
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'payments';
+    protected $table = 'categories';
 
     /**
      * Primary key of the table.
@@ -29,7 +29,7 @@ class Payment extends Model
      * @var bool
      */
     public $timestamps = true;
-
+    
     /**
      * The storage format of the model's date columns.
      *
@@ -56,12 +56,32 @@ class Payment extends Model
     protected $connection = 'mysql';
 
     /**
+     * self-reference relation
+     *
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function parent()
+	{
+	    return $this->belongsTo('App\Category', 'parent_id');
+	}
+
+    /**
+     * self-reference relation
+     *
+     * @return Illuminate\Database\Eloquent\Relations\hasMany
+     */
+	public function children()
+	{
+	    return $this->hasMany('App\Category', 'parent_id');
+	}
+
+    /**
      * One to Many relation
      *
      * @return Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function event()
+	public function articles()
     {
-        return $this->belongsTo('App\Event');
+        return $this->hasMany('App\Article');
     }
 }
